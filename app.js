@@ -119,20 +119,30 @@ window.register = async (event) => {
         btn.disabled = true;
         btn.innerText = "Creation en cours...";
 
-        const response = await fetch('http://localhost:3000/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
+        try {
+            const response = await fetch(`${window.AppConfig.API_URL}/api/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.error || "Erreur lors de l'inscription");
+            if (!response.ok) {
+                throw new Error(data.error || "Erreur lors de l'inscription");
+            }
+
+            alert("Compte cree ! Vous pouvez maintenant vous connecter.");
+            toggleAuth('login');
+        } catch (fetchErr) {
+            // Handle network errors (server not running)
+            console.error(fetchErr);
+            if (fetchErr.message.includes('Failed to fetch')) {
+                 alert("Erreur de connexion au serveur backend. Assurez-vous que le serveur Node.js est lancé (npm start).");
+            } else {
+                 throw fetchErr;
+            }
         }
-
-        alert("Compte cree ! Vous pouvez maintenant vous connecter.");
-        toggleAuth('login');
 
     } catch (err) {
         alert("Erreur: " + err.message);
@@ -1006,10 +1016,18 @@ window.uploadTachoFile = async () => {
     try {
         document.getElementById('tachoResults').innerHTML = '<div class="card"><p>Analyse en cours...</p><div class="loading"></div></div>';
 
-        const response = await fetch('http://localhost:3000/api/upload-card', {
-            method: 'POST',
-            body: formData
-        });
+        let response;
+        try {
+            response = await fetch(`${window.AppConfig.API_URL}/api/upload-card`, {
+                method: 'POST',
+                body: formData
+            });
+        } catch (fetchErr) {
+             if (fetchErr.message.includes('Failed to fetch')) {
+                 throw new Error("Impossible de joindre le serveur d'analyse. Vérifiez qu'il est démarré.");
+             }
+             throw fetchErr;
+        }
 
         if (!response.ok) throw new Error('Upload failed');
 

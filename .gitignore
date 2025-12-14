@@ -1,5 +1,9 @@
 # Secrets - NE PAS PUBLIER
+.env
 supabaseClient.js
+
+# Config (si contient des secrets, mais ici on a séparé la config publique)
+# config.js
 
 # Node modules
 node_modules/

@@ -1,4 +1,8 @@
-const supabaseUrl = 'https://aivstjuqrqdfohoratwe.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpdnN0anVxcnFkZm9ob3JhdHdlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzNjg4MzAsImV4cCI6MjA4MDk0NDgzMH0.0AebBzzNKmz0ZsqDfctVkLB7WXiFrUrQ_TcD3XcbOt4';
-
-const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+// Initialize Supabase Client using global config
+if (!window.AppConfig) {
+    console.error("Configuration missing! Make sure config.js is loaded before supabaseClient.js");
+} else {
+    window.supabaseClient = window.supabase.createClient(window.AppConfig.SUPABASE_URL, window.AppConfig.SUPABASE_ANON_KEY);
+    // Backward compatibility if some code uses 'supabase' variable
+    window.supabase = window.supabaseClient;
+}
