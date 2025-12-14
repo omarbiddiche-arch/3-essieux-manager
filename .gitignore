@@ -1,0 +1,31 @@
+# Secrets - NE PAS PUBLIER
+supabaseClient.js
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Fichiers temporaires
+*.tmp
+*.bak
+
+# Anciens scripts SQL (déjà nettoyés)
+cleanup_*.sql
+disable_rls.sql
+fix_*.sql
+supabase_base_tables.sql
+supabase_storage_complete.sql
+supabase_documents_tracking*.sql
