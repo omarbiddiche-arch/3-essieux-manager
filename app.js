@@ -4,6 +4,9 @@
 
 const supabase = window.supabaseClient;
 
+// --- CONFIG ---
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : window.location.origin;
+
 // --- STATE ---
 const App = {
     user: null,
@@ -119,7 +122,7 @@ window.register = async (event) => {
         btn.disabled = true;
         btn.innerText = "Creation en cours...";
 
-        const response = await fetch('http://localhost:3000/api/register', {
+        const response = await fetch(API_URL + '/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -1006,12 +1009,15 @@ window.uploadTachoFile = async () => {
     try {
         document.getElementById('tachoResults').innerHTML = '<div class="card"><p>Analyse en cours...</p><div class="loading"></div></div>';
 
-        const response = await fetch('http://localhost:3000/api/upload-card', {
+        const response = await fetch(API_URL + '/api/upload-card', {
             method: 'POST',
             body: formData
         });
 
-        if (!response.ok) throw new Error('Upload failed');
+        if (!response.ok) {
+             const errorData = await response.json().catch(() => ({}));
+             throw new Error(errorData.error || errorData.details || 'Upload failed');
+        }
 
         const data = await response.json();
 
