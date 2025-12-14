@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test Supabase</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <h1>Test de connexion Supabase</h1>
+    <div id="result"></div>
+
+    <script src="supabaseClient.js"></script>
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        // Test de connexion
+        async function testConnection() {
+            try {
+                resultDiv.innerHTML = '<p>Test en cours...</p>';
+
+                // Test simple
+                const { data, error } = await supabase.from('users').select('count');
+
+                if (error) {
+                    resultDiv.innerHTML = `
+                        <p style="color: red;">❌ Erreur: ${error.message}</p>
+                        <p>Code: ${error.code}</p>
+                        <p>Details: ${error.details}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<p style="color: green;">✅ Connexion réussie !</p>';
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `
+                    <p style="color: red;">❌ Erreur réseau: ${err.message}</p>
+                    <p>Vérifiez que supabaseClient.js contient les bonnes clés</p>
+                `;
+            }
+        }
+
+        testConnection();
+    </script>
+</body>
+
+</html>
