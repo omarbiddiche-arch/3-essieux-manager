@@ -891,25 +891,6 @@ window.saveGlobalAttendance = async () => {
     }
 };
 
-// --- TACHYDRIVE ---
-function renderTachyDrive() {
-    return `
-        <div class="card fade-in">
-            <h2>TachyDrive</h2>
-            <p>Feature in development...</p>
-        </div>
-    `;
-}
-
-// --- TODO ---
-function renderTodo() {
-    return `
-        <div class="card fade-in">
-            <h2>To-Do List</h2>
-            <p>Feature in development...</p>
-        </div>
-    `;
-}
 
 // --- MODAL UTILS ---
 function initDatePickers(container) {

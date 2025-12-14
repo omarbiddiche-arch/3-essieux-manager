@@ -1,8 +1,18 @@
 const fs = require('fs');
+const path = require('path');
 
-let content = fs.readFileSync('c:/Users/Utilisateur/.gemini/antigravity/playground/ionic-horizon/app.js', 'utf8');
+const appJsPath = path.join(__dirname, 'app.js');
+
+if (!fs.existsSync(appJsPath)) {
+    console.error('Error: app.js not found at', appJsPath);
+    process.exit(1);
+}
+
+let content = fs.readFileSync(appJsPath, 'utf8');
 
 // Replace all broken emoji characters with simple text
+// WARNING: This regex removes all non-ASCII characters, including French accents (é, è, à, etc.)
+// Use with caution!
 content = content.replace(/[^\x00-\x7F]/g, function (char) {
     // Keep only ASCII characters, replace others with space or remove
     return '';
@@ -17,5 +27,5 @@ content = content.replace(/class="btn btn-sm btn-danger"[^>]*>[^<]*<\/button>/g,
     return match;
 });
 
-fs.writeFileSync('c:/Users/Utilisateur/.gemini/antigravity/playground/ionic-horizon/app.js', content, 'utf8');
+fs.writeFileSync(appJsPath, content, 'utf8');
 console.log('✅ Cleaned!');
