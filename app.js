@@ -1,4 +1,4 @@
-﻿// ==============================================
+// ==============================================
 // 3 ESSIEUX MANAGER - APPLICATION PRINCIPALE
 // ==============================================
 
@@ -387,11 +387,11 @@ function renderVehicleRows(vehicles) {
         const hasAlerts = errors.length > 0;
         return `
             <tr style="${hasAlerts ? 'background: #fff3cd;' : ''} cursor: pointer;" onclick="openVehicleDetail(${v.id})" title="Cliquer pour voir les details">
-                <td><strong>${v.plate}</strong></td>
-                <td>${v.model || '-'}</td>
-                <td>${v.type || '-'}</td>
-                <td>${v.km || 0} km</td>
-                <td onclick="event.stopPropagation()">
+                <td data-label="Plaque"><strong>${v.plate}</strong></td>
+                <td data-label="Modele">${v.model || '-'}</td>
+                <td data-label="Type">${v.type || '-'}</td>
+                <td data-label="Km">${v.km || 0} km</td>
+                <td data-label="Actions" onclick="event.stopPropagation()">
                     ${hasAlerts ? '<span style="color: red;">⚠️</span>' : ''}
                     <button class="btn btn-sm btn-danger" onclick="deleteVehicle(${v.id})">🗑️</button>
                 </td>
@@ -410,9 +410,10 @@ function renderVehicles() {
     );
 
     return `
-        <div class="card fade-in">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <div style="display: flex; align-items: center; gap: 1rem;">
+        <div id="vehicles-view" class="card fade-in">
+            <!-- Header Responsive -->
+            <div class="page-header-responsive">
+                <div class="header-group">
                     <h2 style="margin: 0;">Vehicules</h2>
                     <input type="text" 
                         placeholder="Rechercher..." 
@@ -422,24 +423,66 @@ function renderVehicles() {
                         oninput="updateVehicleSearch(this)"
                     >
                 </div>
-                <button class="btn btn-primary" onclick="openVehicleModal()">+ Ajouter</button>
+                <button class="btn btn-primary btn-add-responsive" onclick="openVehicleModal()">+ Ajouter</button>
             </div>
-            <table class="custom-table">
-                <thead>
-                    <tr>
-                        <th>Plaque</th>
-                        <th>Modele</th>
-                        <th>Type</th>
-                        <th>Km</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="vehicleTableBody">
-                    ${renderVehicleRows(filteredVehicles)}
-                </tbody>
-            </table>
+
+            <!-- DESKTOP VIEW -->
+            <div class="desktop-view">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Plaque</th>
+                            <th>Modele</th>
+                            <th>Type</th>
+                            <th>Km</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vehicleTableBody">
+                        ${renderVehicleRows(filteredVehicles)}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- MOBILE VIEW -->
+            <div class="mobile-view">
+                ${renderVehicleCards(filteredVehicles)}
+            </div>
         </div>
     `;
+}
+
+// Nouvelle fonction pour générer les cartes Mobile Véhicules
+function renderVehicleCards(vehicles) {
+    if (vehicles.length === 0) {
+        return '<p style="text-align: center; color: #888; padding: 1rem;">Aucun vehicule trouvé</p>';
+    }
+    return vehicles.map(v => {
+        const errors = validateVehicle(v);
+        const hasAlerts = errors.length > 0;
+        return `
+            <div class="mobile-card" onclick="openVehicleDetail(${v.id})">
+                <div class="mobile-card-header">
+                    <strong>${v.plate}</strong>
+                    <span>${v.km || 0} km</span>
+                </div>
+                <div class="mobile-card-body">
+                    <div class="mobile-card-row">
+                        <span>Modele:</span>
+                        <span>${v.model || '-'}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span>Type:</span>
+                        <span>${v.type || '-'}</span>
+                    </div>
+                </div>
+                <div class="mobile-card-footer">
+                    ${hasAlerts ? '<span style="color: red;">⚠️ Attention requise</span>' : '<span></span>'}
+                    <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteVehicle(${v.id})">🗑️ Supprimer</button>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 window.openVehicleModal = () => {
@@ -523,13 +566,13 @@ function renderDriverRows(drivers) {
         const hasAlerts = errors.length > 0;
         return `
             <tr style="${hasAlerts ? 'background: #fff3cd;' : ''} cursor: pointer;" onclick="openDriverDetail(${d.id})" title="Cliquer pour voir les details">
-                <td><strong>${d.name}</strong></td>
-                <td>${d.phone || '-'}</td>
-                <td>${d.license_type || '-'}</td>
-                <td>${d.license_expiry || '-'}</td>
-                <td>${d.medical_expiry || '-'}</td>
-                <td><span class="badge badge-success">${d.status || 'available'}</span></td>
-                <td onclick="event.stopPropagation()">
+                <td data-label="Nom"><strong>${d.name}</strong></td>
+                <td data-label="Telephone">${d.phone || '-'}</td>
+                <td data-label="Permis">${d.license_type || '-'}</td>
+                <td data-label="Expir. Permis">${d.license_expiry || '-'}</td>
+                <td data-label="Visite Med.">${d.medical_expiry || '-'}</td>
+                <td data-label="Statut"><span class="badge badge-success">${d.status || 'available'}</span></td>
+                <td data-label="Actions" onclick="event.stopPropagation()">
                     ${hasAlerts ? '<span style="color: red;">⚠️</span>' : ''}
                     <button class="btn btn-sm btn-danger" onclick="deleteDriver(${d.id})">🗑️</button>
                 </td>
@@ -548,8 +591,9 @@ function renderDrivers() {
 
     return `
         <div class="card fade-in">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <div style="display: flex; align-items: center; gap: 1rem;">
+            <!-- Header Responsive -->
+            <div class="page-header-responsive">
+                <div class="header-group">
                     <h2 style="margin: 0;">Chauffeurs</h2>
                     <input type="text" 
                         placeholder="Rechercher..." 
@@ -559,26 +603,72 @@ function renderDrivers() {
                         oninput="updateDriverSearch(this)"
                     >
                 </div>
-                <button class="btn btn-primary" onclick="openDriverModal()">+ Ajouter</button>
+                <button class="btn btn-primary btn-add-responsive" onclick="openDriverModal()">+ Ajouter</button>
             </div>
-            <table class="custom-table">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Telephone</th>
-                        <th>Permis</th>
-                        <th>Expiration Permis</th>
-                        <th>Visite Medicale</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="driverTableBody">
-                    ${renderDriverRows(filteredDrivers)}
-                </tbody>
-            </table>
+
+            <!-- DESKTOP VIEW (Tableau) -->
+            <div class="desktop-view">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Telephone</th>
+                            <th>Permis</th>
+                            <th>Expir. Permis</th>
+                            <th>Visite Med.</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="driverTableBody">
+                        ${renderDriverRows(filteredDrivers)}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- MOBILE VIEW (Cartes) -->
+            <div class="mobile-view">
+                ${renderDriverCards(filteredDrivers)}
+            </div>
         </div>
     `;
+}
+
+// Nouvelle fonction pour générer les cartes Mobile
+function renderDriverCards(drivers) {
+    if (drivers.length === 0) {
+        return '<p style="text-align: center; color: #888; padding: 1rem;">Aucun chauffeur trouvé</p>';
+    }
+    return drivers.map(d => {
+        const errors = validateDriver(d);
+        const hasAlerts = errors.length > 0;
+        return `
+            <div class="mobile-card" onclick="openDriverDetail(${d.id})">
+                <div class="mobile-card-header">
+                    <strong>${d.name}</strong>
+                    <span class="badge badge-success">${d.status || 'available'}</span>
+                </div>
+                <div class="mobile-card-body">
+                    <div class="mobile-card-row">
+                        <span>Telephone:</span>
+                        <span>${d.phone || '-'}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span>Permis:</span>
+                        <span>${d.license_type || '-'}</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span>Expir. Permis:</span>
+                        <span style="${hasAlerts ? 'color: red; font-weight: bold;' : ''}">${d.license_expiry || '-'}</span>
+                    </div>
+                </div>
+                <div class="mobile-card-footer">
+                    ${hasAlerts ? '<span style="color: red;">⚠️ Attention requise</span>' : '<span></span>'}
+                    <button class="btn btn-sm btn-danger" onclick="event.stopPropagation(); deleteDriver(${d.id})">🗑️ Supprimer</button>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 window.openDriverModal = () => {
@@ -595,7 +685,14 @@ window.openDriverModal = () => {
             </div>
             <div class="form-group">
                 <label>Type de permis</label>
-                <input type="text" name="license_type" class="form-control">
+                <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ced4da; padding: 0.5rem; border-radius: 0.25rem; background: #fff;">
+                    ${['A1', 'A2', 'A', 'B1', 'B', 'C1', 'C', 'D1', 'D', 'BE', 'C1E', 'CE', 'D1E', 'DE'].map(type => `
+                        <label style="display: flex; align-items: center; margin-bottom: 0.25rem; cursor: pointer;">
+                            <input type="checkbox" name="license_type" value="${type}" style="margin-right: 0.5rem;"> 
+                            ${type}
+                        </label>
+                    `).join('')}
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Enregistrer</button>
         </form>
@@ -605,11 +702,13 @@ window.openDriverModal = () => {
 window.saveDriver = async (e) => {
     e.preventDefault();
     const fd = new FormData(e.target);
+    const selectedLicenses = Array.from(e.target.querySelectorAll('input[name="license_type"]:checked')).map(cb => cb.value);
+
     const payload = {
         company_id: App.user.companyId,
         name: fd.get('name'),
         phone: fd.get('phone'),
-        license_type: fd.get('license_type')
+        license_type: selectedLicenses.join(', ')
     };
 
     try {
@@ -642,15 +741,17 @@ window.attendanceSearchTerm = '';
 
 // Helper to render a single row (used for init and updates)
 function renderAttendanceRow(driver, year, month, daysInMonth) {
-    let rowHtml = `<td style="position: sticky; left: 0; background: var(--bg-secondary); z-index: 5; font-weight: bold;">${driver.name}</td>`;
+    // Sticky Name Column
+    let rowHtml = `<td class="sticky-col-left col-driver-name" title="${driver.name}">${driver.name}</td>`;
 
     // Calculate Stats
-    let workDays = 0;
-    let saturdays = 0;
+    let workDays = 0; // Mon-Fri
+    let saturdays = 0; // Sat
     let totalBonus = 0;
 
     for (let day = 1; day <= daysInMonth; day++) {
         const d = new Date(year, month, day);
+        // Fix timezone issue
         const offset = d.getTimezoneOffset();
         const localD = new Date(d.getTime() - (offset * 60 * 1000));
         const dateStr = localD.toISOString().split('T')[0];
@@ -658,25 +759,52 @@ function renderAttendanceRow(driver, year, month, daysInMonth) {
         const entry = App.attendance.find(a => a.driverId === driver.id && a.date === dateStr);
         const statusIcon = getStatusIcon(entry?.status, d.getDay());
 
+        // Count Days
         if (entry?.status === 'present') {
-            if (d.getDay() === 6) saturdays++;
-            else if (d.getDay() !== 0) workDays++;
-        }
-        if (entry?.manualBonus) {
-            totalBonus += parseFloat(entry.manualBonus);
+            const dayNum = d.getDay();
+            if (dayNum === 6) {
+                saturdays++;
+            } else if (dayNum !== 0) {
+                workDays++;
+            }
         }
 
+        // Calculate Bonuses
+        if (entry) {
+            // Add manual bonus (legacy)
+            if (entry.manualBonus) totalBonus += parseFloat(entry.manualBonus);
+
+            // Add specific primes
+            if (entry.primes) {
+                totalBonus += (parseFloat(entry.primes.lunch) || 0);
+                totalBonus += (parseFloat(entry.primes.morning) || 0);
+                totalBonus += (parseFloat(entry.primes.noon) || 0);
+                totalBonus += (parseFloat(entry.primes.evening) || 0);
+                totalBonus += (parseFloat(entry.primes.night) || 0);
+                totalBonus += (parseFloat(entry.primes.exceptional) || 0);
+            }
+        }
+
+        // Determine Cell Style
+        let cellStyle = "cursor: pointer; text-align: center; border: 1px solid #eee; min-width: 30px;";
+        if (d.getDay() === 0 || d.getDay() === 6) cellStyle += " background: #f8f9fa;"; // Weekend color
+
         rowHtml += `<td onclick="handleAttendanceClick(event, ${driver.id}, '${dateStr}')" 
-                    style="cursor: pointer; text-align: center; border: 1px solid #ddd;"
+                    style="${cellStyle}"
                     data-driver="${driver.id}" data-date="${dateStr}">
                     ${statusIcon}
                 </td>`;
     }
 
-    // Add Stats Cells
-    rowHtml += `<td style="text-align: center; background: #f9fafb; font-weight: bold;">${workDays}</td>`;
-    rowHtml += `<td style="text-align: center; background: #f9fafb; font-weight: bold;">${saturdays}</td>`;
-    rowHtml += `<td style="text-align: center; background: #eff6ff; font-weight: bold; color: #fa7e23;">${totalBonus.toFixed(2)} €</td>`;
+    // Sticky Stats Columns (Right side)
+    // We use a container independent sticky approach or just fixed width assumptions. 
+    // Since we are in a single TR, we can use right sticky values relative to the table container.
+    // Widths: TotalPrimes(80), Sam(50), Ouv(50). 
+    // Accumulate right offsets: Primes=0, Sam=80, Ouv=130.
+
+    rowHtml += `<td class="sticky-col-right col-stat-work">${workDays}</td>`;
+    rowHtml += `<td class="sticky-col-right col-stat-sat">${saturdays}</td>`;
+    rowHtml += `<td class="sticky-col-right col-stat-total">${totalBonus.toFixed(2)}€</td>`;
 
     return rowHtml;
 }
@@ -698,153 +826,133 @@ window.updateAttendanceSearch = (input) => {
     });
 };
 
+// --- NEW ATTENDANCE SYSTEM (Planning React style) ---
+
+const AttendanceManager = {
+    weekStart: null,
+    data: {}, // { driverId: { dateISO: { status, panier, decouche, exceptionnelle } } }
+
+    init() {
+        if (!this.weekStart) {
+            this.weekStart = this.startOfWeekMonday(new Date());
+        }
+        if (window.attendanceData) {
+            this.data = window.attendanceData;
+        } else {
+            // Tentative de migration des anciennes données si nécessaire, sinon vide
+            this.data = {};
+        }
+    },
+
+    startOfWeekMonday(d = new Date()) {
+        const date = new Date(d);
+        const day = date.getDay();
+        const diff = (day === 0 ? -6 : 1) - day;
+        date.setDate(date.getDate() + diff);
+        date.setHours(0, 0, 0, 0);
+        return date;
+    },
+
+    addDays(date, n) {
+        const d = new Date(date);
+        d.setDate(d.getDate() + n);
+        return d;
+    },
+
+    isoDate(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+    },
+
+    fmtDay(date) {
+        return date.toLocaleDateString("fr-FR", { weekday: "short", day: "2-digit", month: "2-digit" });
+    },
+
+    emptyDay() {
+        return {
+            status: "present",
+            panier: { matin: false, midi: false, soir: false },
+            decouche: false,
+            exceptionnelle: { amount: 0, note: "" },
+        };
+    },
+
+    getDayData(driverId, dateISO) {
+        if (!this.data[driverId]) this.data[driverId] = {};
+        if (!this.data[driverId][dateISO]) this.data[driverId][dateISO] = this.emptyDay();
+        return this.data[driverId][dateISO];
+    },
+
+    updateDayData(driverId, dateISO, newData) {
+        if (!this.data[driverId]) this.data[driverId] = {};
+        this.data[driverId][dateISO] = newData;
+        saveGlobalAttendance();
+    },
+
+    shiftWeek(delta) {
+        this.weekStart = this.addDays(this.weekStart, delta * 7);
+        // On force le rafraichissement en rappelant route() ou en injectant le HTML
+        document.getElementById('mainContent').innerHTML = renderAttendance();
+        reAttachListeners(); // Si on avait des listeners spécifiques, ici on utilise onclick inline donc ça va.
+    },
+
+    setToday() {
+        this.weekStart = this.startOfWeekMonday(new Date());
+        document.getElementById('mainContent').innerHTML = renderAttendance();
+    },
+
+    getStatusMeta(key) {
+        const STATUSES = [
+            { key: "present", label: "Présent", class: "bg-emerald-100 text-emerald-700 ring-emerald-200" },
+            { key: "absent", label: "Absent", class: "bg-rose-100 text-rose-700 ring-rose-200" },
+            { key: "conge", label: "Congé", class: "bg-amber-100 text-amber-700 ring-amber-200" },
+            { key: "vacances", label: "Vacances", class: "bg-sky-100 text-sky-700 ring-sky-200" },
+            { key: "maladie", label: "Maladie", class: "bg-orange-100 text-orange-700 ring-orange-200" }
+        ];
+        return STATUSES.find(s => s.key === key) || STATUSES[0];
+    },
+
+    getTotals(driverId) {
+        const row = this.data[driverId] || {};
+        const days = Array.from({ length: 7 }, (_, i) => this.addDays(this.weekStart, i));
+
+        let paniers = { matin: 0, midi: 0, soir: 0 };
+        let decouches = 0;
+        let primesEx = 0;
+
+        days.forEach(day => {
+            const k = this.isoDate(day);
+            const d = row[k] || this.emptyDay();
+            if (d.panier && d.panier.matin) paniers.matin++;
+            if (d.panier && d.panier.midi) paniers.midi++;
+            if (d.panier && d.panier.soir) paniers.soir++;
+            if (d.decouche) decouches++;
+            if (d.exceptionnelle) primesEx += (parseFloat(d.exceptionnelle.amount) || 0);
+        });
+
+        return { paniers, decouches, primesEx: primesEx.toFixed(2) };
+    }
+};
+
+// Render Function
+// --- RENDER ATTENDANCE (Delegated) ---
 function renderAttendance() {
-    const month = window.attendanceDate.getMonth();
-    const year = window.attendanceDate.getFullYear();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const monthNames = ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"];
-
-    let headerHtml = '<tr><th style="position: sticky; left: 0; background: var(--bg-primary); z-index: 10;">Chauffeur</th>';
-    for (let day = 1; day <= daysInMonth; day++) {
-        const d = new Date(year, month, day);
-        const dayName = ['D', 'L', 'M', 'M', 'J', 'V', 'S'][d.getDay()];
-        const isWeekend = d.getDay() === 0 || d.getDay() === 6;
-        headerHtml += `<th class="${isWeekend ? 'weekend-header' : ''}" style="min-width: 35px; font-size: 0.75rem;">${day}<br>${dayName}</th>`;
+    if (typeof AttManager !== 'undefined') {
+        return AttManager.renderMain();
     }
-    headerHtml += '<th style="min-width: 60px; font-size: 0.75rem;">Jours<br>Ouvres</th>';
-    headerHtml += '<th style="min-width: 60px; font-size: 0.75rem;">Samedis</th>';
-    headerHtml += '<th style="min-width: 80px; font-size: 0.75rem;">Total<br>Primes</th>';
-    headerHtml += '</tr>';
-
-    const bodyHtml = App.drivers.map(driver => {
-        return `<tr id="row-${driver.id}">${renderAttendanceRow(driver, year, month, daysInMonth)}</tr>`;
-    }).join('');
-
-    return `
-        <div class="card fade-in">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <button class="btn btn-sm btn-light" onclick="changeMonth(-1)">Prec</button>
-                    <h3 style="margin: 0;">${monthNames[month]} ${year}</h3>
-                    <button class="btn btn-sm btn-light" onclick="changeMonth(1)">Suiv</button>
-                    <input type="text" 
-                        placeholder="Filtrer chauffeur..." 
-                        class="form-control" 
-                        style="width: 150px; padding: 0.3rem; font-size: 0.85rem; margin-left: 1rem;"
-                        value="${window.attendanceSearchTerm || ''}"
-                        oninput="updateAttendanceSearch(this)"
-                    >
-                </div>
-                
-                <div style="display: flex; gap: 0.5rem;">
-                    <button class="btn btn-success" onclick="saveGlobalAttendance()">Enregistrer</button>
-                    <div style="border-left: 2px solid #ccc; margin: 0 0.5rem;"></div>
-                    <button class="btn btn-sm ${window.attendanceTool === 'select' ? 'btn-primary' : 'btn-light'}" onclick="setTool('select')">Selection</button>
-                    <button class="btn btn-sm btn-light" style="color: #10b981;" onclick="setTool('present')">Present</button>
-                    <button class="btn btn-sm btn-light" style="color: #ef4444;" onclick="setTool('absent')">Absent</button>
-                    <button class="btn btn-sm ${window.attendanceTool === 'eraser' ? 'btn-secondary' : 'btn-light'}" onclick="setTool('eraser')">Gomme</button>
-                </div>
-            </div>
-            
-            <div style="overflow-x: auto; max-height: 70vh;">
-                <table class="custom-table" style="width: 100%; border-collapse: collapse;">
-                    <thead>${headerHtml}</thead>
-                    <tbody id="attendanceTableBody">${bodyHtml}</tbody>
-                </table>
-            </div>
-        </div>
-    `;
+    return '<div style="padding:20px; text-align:center">Chargement du module de présence...</div>';
 }
 
-function getStatusIcon(status, dayOfWeek) {
-    if (!status) return dayOfWeek === 0 || dayOfWeek === 6 ? '<span style="color: #ddd;">.</span>' : '';
-    const icons = { 'present': 'OK', 'absent': 'X', 'paid_leave': 'PL', 'medical': 'M' };
-    return icons[status] || status;
-}
 
-window.changeMonth = (delta) => {
-    const d = window.attendanceDate;
-    window.attendanceDate = new Date(d.getFullYear(), d.getMonth() + delta, 1);
-    route();
-};
+// (Deleted)
 
-window.setTool = (tool) => {
-    window.attendanceTool = tool;
-    route();
-};
+// (Old modals deleted)
 
-window.handleAttendanceClick = (e, driverId, dateStr) => {
-    // Determine logic based on tool
-    if (window.attendanceTool === 'eraser') {
-        App.attendance = App.attendance.filter(a => !(a.driverId === driverId && a.date === dateStr));
-    } else if (window.attendanceTool !== 'select') {
-        const entry = { driverId, date: dateStr, status: window.attendanceTool, primes: {}, bonus: 0, manualBonus: 0 };
-        const idx = App.attendance.findIndex(a => a.driverId === driverId && a.date === dateStr);
-        if (idx >= 0) App.attendance[idx] = entry;
-        else App.attendance.push(entry);
-    } else {
-        openAttendanceModal(driverId, dateStr);
-        return; // Modal handling is separate but eventually calls saveAttendanceEntry which should also re-render
-    }
 
-    // Re-render ONLY the specific row to update stats immediately
-    const driver = App.drivers.find(d => d.id === driverId);
-    const row = document.getElementById(`row-${driverId}`);
-    if (row && driver) {
-        const month = window.attendanceDate.getMonth();
-        const year = window.attendanceDate.getFullYear();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        row.innerHTML = renderAttendanceRow(driver, year, month, daysInMonth);
-    }
-};
+// (Residue deleted)
 
-window.openAttendanceModal = (driverId, dateStr) => {
-    const driver = App.drivers.find(d => d.id === driverId);
-    const existing = App.attendance.find(a => a.driverId === driverId && a.date === dateStr);
-    const manualBonus = existing?.manualBonus || 0;
-
-    showModal(`
-        <h3>${driver.name} - ${dateStr}</h3>
-        <form onsubmit="saveAttendanceEntry(event, ${driverId}, '${dateStr}')">
-            <div class="form-group">
-                <label>Statut</label>
-                <select name="status" class="form-control">
-    <option value="present" ${existing?.status === 'present' ? 'selected' : ''}>Present</option>
-                    <option value="absent" ${existing?.status === 'absent' ? 'selected' : ''}>Absent</option>
-                    <option value="paid_leave" ${existing?.status === 'paid_leave' ? 'selected' : ''}>Conges Payes</option>
-                    <option value="medical" ${existing?.status === 'medical' ? 'selected' : ''}>Maladie</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Bonus manuel (EUR)</label>
-                <input type="number" name="manual_bonus" value="${manualBonus}" step="0.01" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary">Valider</button>
-        </form>
-    `);
-};
-
-window.saveAttendanceEntry = (e, driverId, dateStr) => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const manualBonus = parseFloat(fd.get('manual_bonus')) || 0;
-
-    const entry = {
-        driverId,
-        date: dateStr,
-        status: fd.get('status'),
-        primes: {},
-        bonus: manualBonus,
-        manualBonus: manualBonus
-    };
-
-    const idx = App.attendance.findIndex(a => a.driverId === driverId && a.date === dateStr);
-    if (idx >= 0) App.attendance[idx] = entry;
-    else App.attendance.push(entry);
-
-    closeModal();
-    route();
-};
 
 window.saveGlobalAttendance = async () => {
     if (!confirm("Sauvegarder les donnees du mois ?")) return;
@@ -1146,50 +1254,136 @@ function formatHours(hours) {
 // TODO LIST - COMPLETE IMPLEMENTATION
 // ========================================
 
-window.todos = [];
+// --- TODO LIST REWORKED & PERSISTENT ---
 
+// 1. Initialisation (Lecture du LocalStorage)
+try {
+    window.todos = JSON.parse(localStorage.getItem('app_todos') || '[]');
+} catch (e) {
+    window.todos = [];
+}
+
+// 2. Helper Sauvegarde
+function persistTodos() {
+    localStorage.setItem('app_todos', JSON.stringify(window.todos));
+}
+
+// 3. Rendu (Nouveau Design)
 function renderTodo() {
     return `
-        <div class="card fade-in">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h2>To-Do List</h2>
-                <button class="btn btn-primary" onclick="openTodoModal()">+ Ajouter</button>
+        <div class="card fade-in" style="min-height: 80vh;">
+            <div class="page-header-responsive" style="margin-bottom: 2rem;">
+                <div class="header-group">
+                    <h2 style="margin: 0;">📝 Ma To-Do List</h2>
+                    <span class="badge badge-secondary">${window.todos.filter(t => !t.completed).length} restantes</span>
+                </div>
+                <button class="btn btn-primary btn-add-responsive" onclick="openTodoModal()">+ Nouvelle Tâche</button>
             </div>
-            
-            <div id="todoList">
-                ${window.todos.map(todo => `
-                    <div class="card" style="margin-bottom: 1rem; padding: 1rem; ${todo.completed ? 'opacity: 0.6;' : ''}">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <input type="checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo(${todo.id})">
-                                <strong style="margin-left: 0.5rem; ${todo.completed ? 'text-decoration: line-through;' : ''}">${todo.title}</strong>
-                                <p style="margin: 0.5rem 0 0 1.5rem; color: #666;">${todo.description || ''}</p>
+
+            ${window.todos.length === 0 ? `
+                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+                    <p style="font-size: 1.2rem;">Tout est propre !<br>Aucune tâche à faire.</p>
+                </div>
+            ` : `
+                <div class="todo-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                    ${window.todos.map(t => `
+                        <div class="todo-card ${t.completed ? 'completed' : ''}" 
+                             style="
+                                background: ${t.completed ? '#f8f9fa' : '#fff'}; 
+                                border: 1px solid ${t.completed ? '#e9ecef' : '#dee2e6'}; 
+                                border-left: 4px solid ${t.completed ? '#28a745' : '#3b82f6'};
+                                padding: 1rem; 
+                                border-radius: 8px; 
+                                display: flex; 
+                                align-items: flex-start; 
+                                gap: 1rem;
+                                transition: all 0.2s;
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                             ">
+                            
+                            <!-- Checkbox Custom -->
+                            <div style="padding-top: 0.25rem;">
+                                <input type="checkbox" 
+                                    ${t.completed ? 'checked' : ''} 
+                                    onchange="toggleTodo(${t.id})"
+                                    style="width: 20px; height: 20px; cursor: pointer;"
+                                >
                             </div>
-                            <button class="btn btn-sm btn-danger" onclick="deleteTodo(${todo.id})">Delete</button>
+
+                            <!-- Contenu Texte (Sécurisé contre débordement) -->
+                            <div style="flex: 1; min-width: 0;">
+                                <h4 style="
+                                    margin: 0 0 0.25rem 0; 
+                                    font-size: 1.1rem; 
+                                    text-decoration: ${t.completed ? 'line-through' : 'none'};
+                                    color: ${t.completed ? '#6c757d' : '#212529'};
+                                    overflow-wrap: anywhere;
+                                    word-break: break-word; /* IMPORTANT */
+                                    white-space: normal;
+                                ">${t.title}</h4>
+                                
+                                ${t.description ? `
+                                    <p style="
+                                        margin: 0; 
+                                        color: #6c757d; 
+                                        font-size: 0.95rem;
+                                        overflow-wrap: anywhere;
+                                        word-break: break-word; /* IMPORTANT */
+                                        white-space: pre-wrap;
+                                    ">${t.description}</p>
+                                ` : ''}
+                                
+                                <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #adb5bd;">
+                                    Créé le ${new Date(t.createdAt).toLocaleDateString()}
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <button onclick="deleteTodo(${t.id})" 
+                                class="btn-icon" 
+                                style="
+                                    background: none; 
+                                    border: none; 
+                                    font-size: 1.2rem; 
+                                    cursor: pointer; 
+                                    opacity: 0.5;
+                                    padding: 0.25rem;
+                                " 
+                                onmouseover="this.style.opacity=1" 
+                                onmouseout="this.style.opacity=0.5"
+                                title="Supprimer"
+                            >❌</button>
                         </div>
-                    </div>
-                `).join('')}
-            </div>
+                    `).join('')}
+                </div>
+            `}
         </div>
     `;
 }
 
+// 4. Modal Ajout
 window.openTodoModal = () => {
     showModal(`
-        <h3>Nouvelle tache</h3>
+        <h3>Nouvelle Tâche</h3>
         <form onsubmit="saveTodo(event)">
             <div class="form-group">
-                <label>Titre</label>
-                <input type="text" name="title" required class="form-control">
+                <label>Titre de la tâche</label>
+                <input type="text" name="title" required class="form-control" placeholder="Ex: Appeler le client...">
             </div>
             <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" class="form-control" rows="3"></textarea>
+                <label>Description (Optionnel)</label>
+                <textarea name="description" class="form-control" rows="3" placeholder="Détails supplémentaires..."></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <div style="display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
         </form>
     `);
 };
+
+// 5. Logique des Actions (avec Persistance)
 
 window.saveTodo = (e) => {
     e.preventDefault();
@@ -1202,7 +1396,8 @@ window.saveTodo = (e) => {
         createdAt: new Date().toISOString()
     };
 
-    window.todos.push(todo);
+    window.todos.unshift(todo); // Ajoute au début
+    persistTodos(); // Sauvegarde
     closeModal();
     route();
 };
@@ -1211,13 +1406,15 @@ window.toggleTodo = (id) => {
     const todo = window.todos.find(t => t.id === id);
     if (todo) {
         todo.completed = !todo.completed;
+        persistTodos(); // Sauvegarde
         route();
     }
 };
 
 window.deleteTodo = (id) => {
-    if (!confirm("Supprimer cette tache ?")) return;
+    if (!confirm("Supprimer cette tâche ?")) return;
     window.todos = window.todos.filter(t => t.id !== id);
+    persistTodos(); // Sauvegarde
     route();
 };
 
@@ -1738,9 +1935,9 @@ window.openVehicleDetail = (vehicleId) => {
             
             <!-- Vehicle Info -->
             <div class="card" style="margin-bottom: 1rem; background: var(--bg-secondary);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div class="page-header-responsive">
                     <h3 style="margin: 0;">Informations</h3>
-                    <button class="btn btn-sm btn-primary" onclick="openEditVehicleModal(${vehicleId})">✏️ Modifier</button>
+                    <button class="btn btn-sm btn-primary btn-add-responsive" onclick="openEditVehicleModal(${vehicleId})">✏️ Modifier</button>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
                     <div>
@@ -1772,40 +1969,68 @@ window.openVehicleDetail = (vehicleId) => {
             
             <!-- Documents Section -->
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div class="page-header-responsive">
                     <h3 style="margin: 0;">Documents (${documents.length})</h3>
-                    <button class="btn btn-primary btn-sm" onclick="openAddDocumentModal(${vehicleId}, 'vehicle')">
+                    <button class="btn btn-primary btn-sm btn-add-responsive" onclick="openAddDocumentModal(${vehicleId}, 'vehicle')">
                         + Ajouter Document
                     </button>
                 </div>
                 
                 ${documents.length > 0 ? `
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Date Expiration</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${documents.map((doc, idx) => {
+                    <!-- DESKTOP VIEW -->
+                    <div class="desktop-view">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Date Expiration</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${documents.map((doc, idx) => {
         const status = getExpiryStatus(doc.expiryDate);
         return `
-                                    <tr>
-                                        <td><strong>${doc.name}</strong></td>
-                                        <td>${doc.expiryDate || '-'}</td>
-                                        <td><span style="color: ${status.color}; font-weight: 600;">${status.text}</span></td>
-                                        <td>
-                                            <a href="${doc.url}" target="_blank" class="btn btn-sm btn-light">📄 Voir</a>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteDocument(${vehicleId}, 'vehicle', ${idx})">🗑️</button>
-                                        </td>
-                                    </tr>
-                                `;
+                                        <tr>
+                                            <td><strong>${doc.name}</strong></td>
+                                            <td>${doc.expiryDate || '-'}</td>
+                                            <td><span style="color: ${status.color}; font-weight: 600;">${status.text}</span></td>
+                                            <td>
+                                                <a href="${doc.url}" target="_blank" class="btn btn-sm btn-light">📄 Voir</a>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteDocument(${vehicleId}, 'vehicle', ${idx})">🗑️</button>
+                                            </td>
+                                        </tr>
+                                    `;
     }).join('')}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- MOBILE VIEW -->
+                    <div class="mobile-view">
+                        ${documents.map((doc, idx) => {
+        const status = getExpiryStatus(doc.expiryDate);
+        return `
+                                <div class="mobile-card" style="margin-bottom: 0.75rem;">
+                                    <div class="mobile-card-header" style="border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                                        <strong>${doc.name}</strong>
+                                        <span style="color: ${status.color}; font-weight: 600; font-size: 0.85rem;">${status.text}</span>
+                                    </div>
+                                    <div class="mobile-card-body" style="margin-bottom: 0.5rem;">
+                                        <div class="mobile-card-row">
+                                            <span>Expiration:</span>
+                                            <span>${doc.expiryDate || '-'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mobile-card-footer" style="padding-top: 0.5rem; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        <a href="${doc.url}" target="_blank" class="btn btn-sm btn-light" style="flex: 1; text-align: center;">📄 Voir</a>
+                                        <button class="btn btn-sm btn-danger" style="flex: 1;" onclick="deleteDocument(${vehicleId}, 'vehicle', ${idx})">🗑️ Supprimer</button>
+                                    </div>
+                                </div>
+                            `;
+    }).join('')}
+                    </div>
                 ` : '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">Aucun document</p>'}
             </div>
             
@@ -1968,9 +2193,9 @@ window.openDriverDetail = (driverId) => {
             <h2>👤 ${driver.name}</h2>
             
             <div class="card" style="margin-bottom: 1rem; background: var(--bg-secondary);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div class="page-header-responsive">
                     <h3 style="margin: 0;">Informations</h3>
-                    <button class="btn btn-sm btn-primary" onclick="openEditDriverModal(${driverId})">✏️ Modifier</button>
+                    <button class="btn btn-sm btn-primary btn-add-responsive" onclick="openEditDriverModal(${driverId})">✏️ Modifier</button>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
                     <div>
@@ -2000,40 +2225,68 @@ window.openDriverDetail = (driverId) => {
             ` : ''}
             
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div class="page-header-responsive">
                     <h3 style="margin: 0;">Documents (${documents.length})</h3>
-                    <button class="btn btn-primary btn-sm" onclick="openAddDocumentModal(${driverId}, 'driver')">
+                    <button class="btn btn-primary btn-sm btn-add-responsive" onclick="openAddDocumentModal(${driverId}, 'driver')">
                         + Ajouter Document
                     </button>
                 </div>
                 
                 ${documents.length > 0 ? `
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Date Expiration</th>
-                                <th>Statut</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${documents.map((doc, idx) => {
+                    <!-- DESKTOP VIEW -->
+                    <div class="desktop-view">
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom</th>
+                                    <th>Date Expiration</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${documents.map((doc, idx) => {
         const status = getExpiryStatus(doc.expiryDate);
         return `
-                                    <tr>
-                                        <td><strong>${doc.name}</strong></td>
-                                        <td>${doc.expiryDate || '-'}</td>
-                                        <td><span style="color: ${status.color}; font-weight: 600;">${status.text}</span></td>
-                                        <td>
-                                            <a href="${doc.url}" target="_blank" class="btn btn-sm btn-light">📄 Voir</a>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteDocument(${driverId}, 'driver', ${idx})">🗑️</button>
-                                        </td>
-                                    </tr>
-                                `;
+                                        <tr>
+                                            <td><strong>${doc.name}</strong></td>
+                                            <td>${doc.expiryDate || '-'}</td>
+                                            <td><span style="color: ${status.color}; font-weight: 600;">${status.text}</span></td>
+                                            <td>
+                                                <a href="${doc.url}" target="_blank" class="btn btn-sm btn-light">📄 Voir</a>
+                                                <button class="btn btn-sm btn-danger" onclick="deleteDocument(${driverId}, 'driver', ${idx})">🗑️</button>
+                                            </td>
+                                        </tr>
+                                    `;
     }).join('')}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- MOBILE VIEW -->
+                    <div class="mobile-view">
+                        ${documents.map((doc, idx) => {
+        const status = getExpiryStatus(doc.expiryDate);
+        return `
+                                <div class="mobile-card" style="margin-bottom: 0.75rem;">
+                                    <div class="mobile-card-header" style="border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                                        <strong>${doc.name}</strong>
+                                        <span style="color: ${status.color}; font-weight: 600; font-size: 0.85rem;">${status.text}</span>
+                                    </div>
+                                    <div class="mobile-card-body" style="margin-bottom: 0.5rem;">
+                                        <div class="mobile-card-row">
+                                            <span>Expiration:</span>
+                                            <span>${doc.expiryDate || '-'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="mobile-card-footer" style="padding-top: 0.5rem; border-top: 1px solid #eee; display: flex; justify-content: flex-end; gap: 0.5rem;">
+                                        <a href="${doc.url}" target="_blank" class="btn btn-sm btn-light" style="flex: 1; text-align: center;">📄 Voir</a>
+                                        <button class="btn btn-sm btn-danger" style="flex: 1;" onclick="deleteDocument(${driverId}, 'driver', ${idx})">🗑️ Supprimer</button>
+                                    </div>
+                                </div>
+                            `;
+    }).join('')}
+                    </div>
                 ` : '<p style="text-align: center; color: var(--text-muted); padding: 2rem;">Aucun document</p>'}
             </div>
             
@@ -2060,7 +2313,7 @@ window.openEditVehicleModal = (vehicleId) => {
         <form onsubmit="saveVehicleEdit(event, ${vehicleId})">
             <div class="form-group">
                 <label>Plaque</label>
-                <input type="text" name="plate" value="${vehicle.plate}" required class="form-control" readonly style="background: #f0f0f0;">
+                <input type="text" name="plate" value="${vehicle.plate}" required class="form-control">
             </div>
             <div class="form-group">
                 <label>Modele</label>
@@ -2095,6 +2348,7 @@ window.saveVehicleEdit = async (e, vehicleId) => {
     const fd = new FormData(e.target);
 
     const updates = {
+        plate: fd.get('plate'),
         model: fd.get('model'),
         type: fd.get('type'),
         km: parseInt(fd.get('km')) || 0,
@@ -2112,6 +2366,24 @@ window.saveVehicleEdit = async (e, vehicleId) => {
         // Update local state
         const vehicle = App.vehicles.find(v => v.id === vehicleId);
         Object.assign(vehicle, updates);
+
+        // --- RAFRAICHISSEMENT DE LA VUE LISTE EN ARRIÈRE-PLAN ---
+        // 1. Ré-appliquer le filtre actuel
+        const term = (window.vehicleSearchTerm || '').toLowerCase();
+        const filteredVehicles = App.vehicles.filter(v =>
+            v.plate.toLowerCase().includes(term) ||
+            (v.model && v.model.toLowerCase().includes(term)) ||
+            (v.type && v.type.toLowerCase().includes(term))
+        );
+
+        // 2. Mettre à jour le Tableau Desktop
+        const tbody = document.getElementById('vehicleTableBody');
+        if (tbody) tbody.innerHTML = renderVehicleRows(filteredVehicles);
+
+        // 3. Mettre à jour les Cartes Mobile
+        const mobileContainer = document.querySelector('#vehicles-view .mobile-view');
+        if (mobileContainer) mobileContainer.innerHTML = renderVehicleCards(filteredVehicles);
+        // ---------------------------------------------------------
 
         alert("✅ Vehicule modifie!");
         closeModal();
@@ -2139,7 +2411,20 @@ window.openEditDriverModal = (driverId) => {
             </div>
             <div class="form-group">
                 <label>Type Permis</label>
-                <input type="text" name="license_type" value="${driver.license_type || ''}" class="form-control">
+                <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ced4da; padding: 0.5rem; border-radius: 0.25rem; background: #fff;">
+                    ${(() => {
+            const currentLicenses = (driver.license_type || '').split(',').map(s => s.trim());
+            return ['A1', 'A2', 'A', 'B1', 'B', 'C1', 'C', 'D1', 'D', 'BE', 'C1E', 'CE', 'D1E', 'DE'].map(type => `
+                            <label style="display: flex; align-items: center; margin-bottom: 0.25rem; cursor: pointer;">
+                                <input type="checkbox" name="license_type" value="${type}" 
+                                    ${currentLicenses.includes(type) ? 'checked' : ''} 
+                                    style="margin-right: 0.5rem;"
+                                > 
+                                ${type}
+                            </label>
+                        `).join('');
+        })()}
+                </div>
             </div>
             <div class="form-group">
                 <label>Expiration Permis</label>
@@ -2169,11 +2454,12 @@ window.openEditDriverModal = (driverId) => {
 window.saveDriverEdit = async (e, driverId) => {
     e.preventDefault();
     const fd = new FormData(e.target);
+    const selectedLicenses = Array.from(e.target.querySelectorAll('input[name="license_type"]:checked')).map(cb => cb.value);
 
     const updates = {
         name: fd.get('name'),
         phone: fd.get('phone'),
-        license_type: fd.get('license_type'),
+        license_type: selectedLicenses.join(', '),
         license_expiry: fd.get('license_expiry') || null,
         medical_expiry: fd.get('medical_expiry') || null,
         status: fd.get('status')
