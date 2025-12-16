@@ -1,0 +1,2117 @@
+/* ============================================
+   3 ESSIEUX MANAGER - PROFESSIONAL DESIGN
+   ============================================ */
+
+:root {
+    /* Modern Color Palette */
+    --primary: #4F46E5;
+    --primary-dark: #4338CA;
+    --primary-light: #818CF8;
+    --secondary: #10B981;
+    --secondary-dark: #059669;
+    --danger: #EF4444;
+    --danger-dark: #DC2626;
+    --warning: #F59E0B;
+    --info: #3B82F6;
+
+    /* Neutrals */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F9FAFB;
+    --bg-tertiary: #F3F4F6;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --border: #E5E7EB;
+    --border-dark: #D1D5DB;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+
+    /* Border Radius */
+    --radius-sm: 0.375rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+
+    /* Transitions */
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   NAVBAR - MODERN DESIGN
+   ============================================ */
+
+.navbar {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.brand-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.brand-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-link:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.nav-link.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    min-height: calc(100vh - 64px);
+}
+
+/* ============================================
+   CARDS - MODERN DESIGN
+   ============================================ */
+
+.card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+/* ============================================
+   BUTTONS - PROFESSIONAL DESIGN
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: 0.625rem 1.25rem;
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-success {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--secondary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: var(--danger-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-light {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-light:hover {
+    background: var(--bg-secondary);
+    border-color: var(--border-dark);
+}
+
+.btn-secondary {
+    background: var(--text-secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: var(--text-primary);
+}
+
+.btn-sm {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   TABLES - MODERN DESIGN
+   ============================================ */
+
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+}
+
+.custom-table thead {
+    background: var(--bg-tertiary);
+}
+
+.custom-table thead th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--border);
+}
+
+.custom-table thead th:first-child {
+    border-top-left-radius: var(--radius);
+}
+
+.custom-table thead th:last-child {
+    border-top-right-radius: var(--radius);
+}
+
+.custom-table tbody tr {
+    transition: var(--transition);
+    border-bottom: 1px solid var(--border);
+}
+
+.custom-table tbody tr:hover {
+    background: var(--bg-secondary);
+}
+
+.custom-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.custom-table tbody td {
+    padding: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.custom-table tbody td strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ============================================
+   FORMS - MODERN DESIGN
+   ============================================ */
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: var(--transition);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+/* File input styling */
+input[type="file"].form-control {
+    padding: 0.5rem 0.875rem;
+    cursor: pointer;
+    border: 1.5px dashed var(--border);
+    background: var(--bg-secondary);
+}
+
+input[type="file"].form-control:hover {
+    border-color: var(--primary);
+    background: var(--bg-primary);
+}
+
+input[type="file"].form-control:focus {
+    border-style: solid;
+}
+
+/* ============================================
+   MODAL - MODERN DESIGN
+   ============================================ */
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+}
+
+.modal-close:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.badge-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--secondary-dark);
+}
+
+.badge-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-dark);
+}
+
+.badge-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #D97706;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.gap-1 {
+    gap: var(--spacing-md);
+}
+
+.gap-2 {
+    gap: var(--spacing-lg);
+}
+
+.align-center {
+    align-items: center;
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-md);
+}
+
+.mb-3 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mt-1 {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-2 {
+    margin-top: var(--spacing-md);
+}
+
+.mt-3 {
+    margin-top: var(--spacing-lg);
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-sm {
+    font-size: 0.875rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ============================================
+   ATTENDANCE SPECIFIC
+   ============================================ */
+
+.weekend-header {
+    background: rgba(79, 70, 229, 0.05) !important;
+    color: var(--primary) !important;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border);
+        padding: var(--spacing-md);
+        display: none;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .main-content {
+        padding: var(--spacing-md);
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: var(--spacing-lg);
+    }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   ALERTS
+   ============================================ */
+
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--radius);
+    margin-bottom: var(--spacing-md);
+    border-left: 4px solid;
+}
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--warning);
+    color: #92400E;
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger);
+    color: #991B1B;
+}
+
+.alert-success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: var(--secondary);
+    color: #065F46;
+}
+
+.alert-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: var(--info);
+    color: #1E40AF;
+}
+
+/* ============================================
+   DETAIL PAGE HEADERS
+   ============================================ */
+
+.detail-header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.detail-header-buttons h3 {
+    margin: 0;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE - OPTIMIZED
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    /* Base adjustments */
+    body {
+        font-size: 15px;
+    }
+
+    /* Cards more compact */
+    .card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Search bar full width and bigger */
+    input[type="search"],
+    input[type="text"],
+    input[placeholder*="Rechercher"] {
+        width: 100% !important;
+        font-size: 16px !important;
+        padding: 0.75rem !important;
+        margin-bottom: 1rem;
+    }
+
+    /* Buttons full width and bigger */
+    .btn {
+        font-size: 16px !important;
+        padding: 0.75rem 1rem !important;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-sm {
+        font-size: 14px !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+
+    /* Tables: Convert to cards on mobile (except attendance calendar) */
+    table:not(.attendance-calendar table) {
+        border: 0;
+    }
+
+    table:not(.attendance-calendar table) thead {
+        display: none;
+        /* Hide headers */
+    }
+
+    table:not(.attendance-calendar table) tbody {
+        display: block;
+    }
+
+    table:not(.attendance-calendar table) tr {
+        display: block;
+        margin-bottom: 1rem;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    table:not(.attendance-calendar table) td {
+        display: block;
+        text-align: left !important;
+        font-size: 15px !important;
+        padding: 0.5rem 0 !important;
+        border: none !important;
+    }
+
+    table:not(.attendance-calendar table) td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-secondary);
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    /* Action buttons in cards */
+    table:not(.attendance-calendar table) td:last-child {
+        padding-top: 1rem !important;
+        border-top: 1px solid var(--border) !important;
+        margin-top: 0.5rem;
+    }
+
+    /* Attendance calendar - scroll horizontal */
+    .attendance-calendar {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .attendance-calendar table {
+        display: table !important;
+        min-width: 800px;
+    }
+
+    .attendance-calendar thead {
+        display: table-header-group !important;
+    }
+
+    .attendance-calendar tr {
+        display: table-row !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    .attendance-calendar td,
+    .attendance-calendar th {
+        display: table-cell !important;
+        font-size: 11px !important;
+        padding: 0.3rem !important;
+        min-width: 35px !important;
+    }
+
+    .attendance-calendar td:before {
+        content: none !important;
+    }
+
+    /* Attendance tools */
+    .attendance-tools {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+
+    .attendance-tools button {
+        flex: 1 1 45% !important;
+        font-size: 14px !important;
+    }
+
+    /* Modal full screen */
+    .modal-content {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 1rem auto !important;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* Form inputs bigger */
+    .form-control {
+        font-size: 16px !important;
+        padding: 0.75rem !important;
+    }
+
+    /* Stats grid single column */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Navigation */
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-link {
+        padding: 1rem;
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Headers smaller */
+    h1 {
+        font-size: 1.75rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+    }
+
+    h3 {
+        font-size: 1.25rem !important;
+    }
+
+    /* Detail page button groups - Stack on mobile */
+    .detail-header-buttons {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+
+    .detail-header-buttons h3 {
+        margin: 0 !important;
+        width: 100%;
+    }
+
+    .detail-header-buttons button {
+        width: 100% !important;
+    }
+
+    /* ============================================
+       OPTIMISATION MOBILE - RÃƒÂ©duction des espacements
+       ============================================ */
+
+    /* Cards plus compactes */
+    .card {
+        padding: 0.75rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* Titres plus compacts */
+    h2 {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    h3 {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Inputs et boutons plus compacts */
+    .form-control {
+        padding: 0.6rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .btn {
+        padding: 0.6rem 1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Tableaux plus compacts (sauf calendrier prÃƒÂ©sences) */
+    table:not(.attendance-calendar table) tr {
+        margin-bottom: 0.5rem !important;
+    }
+
+    table:not(.attendance-calendar table) td {
+        padding: 0.5rem !important;
+    }
+
+    /* RÃƒÂ©duire l'espace dans les grids */
+    div[style*="grid-template-columns"] {
+        gap: 0.5rem !important;
+    }
+
+    /* Dashboard stats cards - RÃƒÂ©duire l'espacement vertical */
+    div[style*="grid-template-columns"][style*="minmax(250px"] {
+        gap: 0.5rem !important;
+        row-gap: 0.5rem !important;
+    }
+
+    /* Labels et textes plus compacts */
+    label {
+        margin-bottom: 0.25rem !important;
+        font-size: 0.8rem !important;
+    }
+
+    small {
+        font-size: 0.75rem !important;
+    }
+
+    /* Form groups plus compacts */
+    .form-group {
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* Modals plus compacts */
+    .modal-content {
+        padding: 1rem !important;
+    }
+
+    /* Alertes plus compactes */
+    .alert {
+        padding: 0.75rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* Detail header buttons plus compact */
+    .detail-header-buttons {
+        gap: 0.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* Espacement entre cards rÃƒÂ©duit */
+    .card+.card {
+        margin-top: 0.75rem !important;
+    }
+
+    /* ============================================
+       EXCEPTIONS - Page PrÃƒÂ©sences (Attendance)
+       ============================================ */
+
+    /* Restaurer l'espacement normal pour la page PrÃƒÂ©sences */
+    #mainContent:has(.attendance-calendar) .card,
+    .attendance-header,
+    .attendance-tools {
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .attendance-tools .btn {
+        padding: 0.75rem 1rem !important;
+    }
+
+    .attendance-header input[type="text"] {
+        padding: 0.75rem !important;
+    }
+
+    .attendance-header h3 {
+        font-size: 1.25rem !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .card {
+        padding: 1.5rem;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
+        padding: 0.75rem;
+    }
+}
+
+/* Very small screens (max 480px) */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .nav-brand h1 {
+        font-size: 1.1rem;
+    }
+
+    .btn {
+        font-size: 15px !important;
+    }
+
+    .attendance-calendar td,
+    .attendance-calendar th {
+        font-size: 10px !important;
+        padding: 0.2rem !important;
+        min-width: 30px !important;
+    }
+
+    /* Detail page button groups */
+    .detail-header-buttons {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+
+    .detail-header-buttons h3 {
+        margin: 0 !important;
+        width: 100%;
+    }
+
+    .detail-header-buttons button {
+        width: 100% !important;
+    }
+}
+
+/* ============================================
+   MODAL DOCUMENTS - Alignement sur mobile
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    /* Modal documents - Formulaire bien alignÃ© */
+    .modal-content .form-group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .modal-content .form-group label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .modal-content .form-group input,
+    .modal-content .form-group select,
+    .modal-content .form-group textarea {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    .modal-content .form-group small {
+        display: block;
+        margin-top: 0.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Empiler les contrÃ´les verticalement - PAGE PRÃ‰SENCES UNIQUEMENT */
+    #mainContent:has(.custom-table) .card>div[style*='display: flex'][style*='justify-content: space-between'] {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+
+    /* Navigation mois + filtre - PAGE PRÃ‰SENCES UNIQUEMENT */
+    #mainContent:has(.custom-table) .card>div[style*='display: flex']>div[style*='display: flex'] {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 0.5rem !important;
+    }
+
+    #mainContent:has(.custom-table) .card>div[style*='display: flex']>div[style*='display: flex'] input {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    /* Boutons d'outils empilÃ©s - Fallback si Grid non supportÃ© */
+    #mainContent:has(.custom-table) .card>div[style*='display: flex']>div[style*='display: flex']:last-child {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+
+    #mainContent:has(.custom-table) .card>div[style*='display: flex']>div[style*='display: flex']:last-child .btn {
+        flex: 1 1 auto !important;
+        min-width: 80px !important;
+    }
+
+    /* Calendrier - DÃ©filement horizontal pour les jours */
+    .custom-table {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .custom-table thead,
+    .custom-table tbody {
+        display: block !important;
+    }
+
+    .custom-table tr {
+        display: flex !important;
+        border-bottom: 1px solid var(--border) !important;
+    }
+
+    /* PremiÃ¨re colonne (nom chauffeur) fixe */
+    .custom-table th:first-child,
+    .custom-table td:first-child {
+        position: sticky !important;
+        left: 0 !important;
+        background: var(--bg-primary) !important;
+        z-index: 10 !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        font-size: 0.75rem !important;
+        padding: 0.5rem 0.25rem !important;
+        border-right: 2px solid var(--border) !important;
+    }
+
+    /* Jours - DÃ©filement horizontal */
+    .custom-table th:not(:first-child):not(:nth-last-child(-n+3)),
+    .custom-table td:not(:first-child):not(:nth-last-child(-n+3)) {
+        min-width: 35px !important;
+        max-width: 35px !important;
+        font-size: 0.7rem !important;
+        padding: 0.5rem 0.2rem !important;
+        text-align: center !important;
+    }
+
+    /* Colonnes totaux (3 derniÃ¨res) fixÃ©es Ã  droite */
+    .custom-table th:nth-last-child(-n+3),
+    .custom-table td:nth-last-child(-n+3) {
+        position: sticky !important;
+        background: var(--bg-secondary) !important;
+        z-index: 9 !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        font-size: 0.7rem !important;
+        padding: 0.5rem 0.25rem !important;
+        text-align: center !important;
+        border-left: 2px solid var(--border) !important;
+    }
+
+    .custom-table th:nth-last-child(3),
+    .custom-table td:nth-last-child(3) {
+        right: 100px !important;
+    }
+
+    .custom-table th:nth-last-child(2),
+    .custom-table td:nth-last-child(2) {
+        right: 50px !important;
+    }
+
+    .custom-table th:nth-last-child(1),
+    .custom-table td:nth-last-child(1) {
+        right: 0 !important;
+    }
+
+    /* Container avec scroll horizontal */
+    div[style*='overflow-x: auto'] {
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important;
+        max-height: none !important;
+    }
+}
+
+
+/* ============================================
+   PAGE PRÃ‰SENCES - LAYOUT BOUTONS MOBILE (FINAL)
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    /* CONTENEUR PRINCIPAL DES OUTILS */
+    /* On cible le conteneur qui contient le bouton 'Enregistrer' */
+    #mainContent:has(.custom-table) .card>div[style*='display: flex']:first-child>div:has(button[onclick*='saveGlobalAttendance']) {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-areas:
+            'selection present'
+            'absent    eraser'
+            'save      save' !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+
+    /* ZONE 1 : SÃ‰LECTION (Haut Gauche) */
+    button[onclick*='select'] {
+        grid-area: selection !important;
+        width: 100% !important;
+        order: unset !important;
+        /* Reset des anciens hacks */
+    }
+
+    /* ZONE 2 : PRÃ‰SENT (Haut Droite) */
+    button[onclick*='present'] {
+        grid-area: present !important;
+        width: 100% !important;
+        order: unset !important;
+    }
+
+    /* ZONE 3 : ABSENT (Bas Gauche) */
+    button[onclick*='absent'] {
+        grid-area: absent !important;
+        width: 100% !important;
+        order: unset !important;
+    }
+
+    /* ZONE 4 : GOMME (Bas Droite) */
+    button[onclick*='eraser'] {
+        grid-area: eraser !important;
+        width: 100% !important;
+        order: unset !important;
+    }
+
+    /* ZONE 5 : ENREGISTRER (Tout en bas) */
+    button[onclick*='saveGlobalAttendance'] {
+        grid-area: save !important;
+        width: 100% !important;
+        margin-top: 0.25rem !important;
+        order: unset !important;
+    }
+
+    /* Cacher le sÃ©parateur vertical inutile */
+    #mainContent:has(.custom-table) div[style*='border-left'] {
+        display: none !important;
+    }
+}
+/* ==========================================================================
+   SYSTEME RESPONSIVE BÉTON (Adaptive Layout)
+   ========================================================================== */
+
+/* 1. LAYOUT HEADER (Rechrche/Boutons) - Commun */
+.page-header-responsive {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.header-group { display: flex; align-items: center; gap: 1rem; }
+
+/* 2. VISIBILITÉ DESKTOP VS MOBILE */
+
+/* Par défaut (Desktop) */
+.desktop-view { display: block; width: 100%; }
+.mobile-view { display: none; } /* Caché sur PC */
+
+/* MOBILE UNIQUEMENT (< 768px) */
+@media (max-width: 768px) {
+    /* Switch de vue */
+    .desktop-view { display: none !important; }
+    .mobile-view { display: block !important; }
+
+    /* Header empilé */
+    .page-header-responsive { flex-direction: column !important; gap: 1rem !important; }
+    .header-group { flex-direction: column !important; width: 100% !important; align-items: flex-start !important; gap: 0.5rem !important; }
+    .header-group input { width: 100% !important; margin: 0 !important; }
+    .btn-add-responsive { width: 100% !important; }
+
+    /* --- STYLE DES CARTES MOBILE (HTML dédié) --- */
+    .mobile-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        cursor: pointer;
+    }
+    
+    .mobile-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        border-bottom: 1px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+
+    .mobile-card-body {
+        margin-bottom: 1rem;
+    }
+
+    .mobile-card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Important */
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .mobile-card-row span:first-child {
+        font-weight: 600;
+        color: #666;
+        min-width: 100px; /* Largeur mini label */
+    }
+    
+    .mobile-card-row span:last-child {
+        font-weight: 500;
+        color: #333;
+        text-align: right;
+        white-space: normal; /* Texte peut wrapper si trop long */
+        max-width: 60%;
+    }
+
+    .mobile-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.5rem;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    /* --- PAGE PRÉSENCES --- */
+    /* Le tableau Présences reste un Tableau scrollable */
+    .custom-table:has(#attendanceTableBody) {
+        display: block !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        width: 100% !important;
+    }
+    /* Outils grid 2x2 */
+    #mainContent:has(#attendanceTableBody) .card > div:first-child > div:last-child {
+        display: grid !important; 
+        grid-template-columns: 1fr 1fr; 
+        width: 100%; gap: 0.5rem;
+    }
+}
+
+
+/* ============================================
+   FIX DÉBORDEMENT TEXTE (MOTS LONGS)
+   ============================================ */
+
+/* 1. Modales : Valeurs (ex: Modèle, Plaque) */
+.modal-content p, .modal-content span {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+    max-width: 100% !important;
+}
+
+/* 2. Todo List : Texte des tâches */
+.list-group-item label {
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-all !important; /* Coupe sec si mot trop long */
+    display: block !important;
+    max-width: 100% !important;
+}
+
+/* 3. Cartes Mobile : Valeurs à droite */
+.mobile-card-row span:last-child {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}
+
+
+/* ============================================
+   PRÉSENCES MOBILE V2 (Toolbar & Table)
+   ============================================ */
+
+/* Style des boutons toolbar mobile */
+.tool-btn {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.tool-btn.active {
+    background: #e9ecef;
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    border-color: #adb5bd;
+}
+
+/* Tableau des présences */
+.attendance-table th, .attendance-table td {
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+/* Ajustement Mobile Tactile */
+@media (max-width: 768px) {
+    /* Cellules du Calendrier plus grandes pour le doigt */
+    .attendance-table td[onclick] {
+        min-width: 40px !important;
+        height: 40px !important;
+        font-size: 1.2rem !important; /* Emoji plus gros */
+    }
+    
+    /* La colonne Chauffeur doit avoir de l'ombre pour marquer le scroll */
+    .attendance-table td:first-child, .attendance-table th:first-child {
+        box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        border-right: 2px solid #ddd !important;
+    }
+}
+
+
+/* ============================================
+   GRID OUTILS PRÉSENCES (Mobile Clean)
+   ============================================ */
+
+.tools-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .tools-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 colonnes */
+        gap: 0.75rem;
+    }
+
+    .tools-container button {
+        width: 100%;
+        padding: 0.6rem;
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+/* ============================================
+   ATTENDANCE TABLE SPECIFIC
+   ============================================ */
+
+.attendance-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.sticky-col-left {
+    position: sticky;
+    left: 0;
+    z-index: 15;
+    background: var(--bg-secondary) !important;
+    border-right: 2px solid #ddd;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sticky-col-right {
+    position: sticky;
+    z-index: 15;
+    border-left: 1px solid #ddd;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Default Desktop Sizes */
+.col-driver-name {
+    min-width: 140px;
+    max-width: 200px;
+}
+
+.col-stat-work {
+    right: 130px;
+    width: 50px;
+    background: #fffbe6 !important;
+    color: #b7791f;
+}
+
+.col-stat-sat {
+    right: 80px;
+    width: 50px;
+    background: #e6ffFA !important;
+    color: #2c7a7b;
+}
+
+.col-stat-total {
+    right: 0;
+    width: 80px;
+    background: #ebf8ff !important;
+    color: #2b6cb0;
+}
+
+/* Mobile Scaling */
+@media (max-width: 768px) {
+    .col-driver-name {
+        min-width: 85px;
+        max-width: 85px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 4px !important;
+    }
+
+    .sticky-col-right {
+        font-size: 0.7rem;
+        padding: 4px !important;
+    }
+
+    /* Recalculated Offsets for Compact Mobile View */
+    /* Total: 60px | Sat: 35px | Work: 35px */
+
+    .col-stat-total {
+        width: 60px;
+        right: 0;
+    }
+
+    .col-stat-sat {
+        width: 35px;
+        right: 60px;
+    }
+
+    .col-stat-work {
+        width: 35px;
+        right: 95px;
+    }
+}
+
+/* Force compact padding for attendance table */
+.attendance-table td, .attendance-table th {
+    padding: 4px !important;
+}
+
+
+/* Mobile Sticky Fixes */
+@media (max-width: 768px) {
+    .attendance-calendar .col-stat-total {
+        width: 70px !important;
+        min-width: 70px !important;
+        right: 0 !important;
+    }
+    .attendance-calendar .col-stat-sat {
+        width: 40px !important;
+        min-width: 40px !important;
+        right: 70px !important;
+    }
+    .attendance-calendar .col-stat-work {
+        width: 40px !important;
+        min-width: 40px !important;
+        right: 110px !important;
+    }
+}
+
+
+/* Mobile Tools Stacked */
+@media (max-width: 767px) {
+    .tools-scroll-container {
+        overflow-x: visible !important;
+        white-space: normal !important;
+        padding-bottom: 0 !important;
+    }
+    .tools-scroll-container > div {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr; /* 2 columns stacked */
+        gap: 0.5rem;
+    }
+    .tools-scroll-container .btn {
+        width: 100%;
+        justify-content: center;
+        margin: 0 !important;
+    }
+}
+
+
+/* ============================================
+   TOOLS CONTAINER STYLING V3
+   ============================================ */
+
+/* Desktop Default (Scrollable if needed, mostly inline) */
+.tools-scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 0.5rem;
+    padding-bottom: 5px;
+}
+
+.tools-wrapper {
+    display: inline-flex;
+    gap: 0.5rem;
+}
+
+.tools-wrapper .btn {
+    white-space: nowrap;
+}
+
+/* Mobile Overrides (Stacked Grid) */
+@media (max-width: 768px) {
+    .tools-scroll-container {
+        overflow-x: visible;
+        white-space: normal;
+        padding-bottom: 0;
+    }
+
+    .tools-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 colonnes strict */
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .tools-wrapper .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.6rem;
+        font-size: 0.95rem; /* Readable font size */
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-bottom: 0; /* Remove margin if any */
+    }
+}
+
+
+/* FINAL MOBILE GRID FIX */
+@media (max-width: 768px) {
+    .tools-scroll-container {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        margin-bottom: 1rem !important;
+        padding: 0 !important;
+    }
+
+    .tools-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .tools-wrapper .btn {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 0.75rem 0.5rem !important;
+        font-size: 0.9rem !important;
+        white-space: normal !important;
+        line-height: 1.2 !important;
+    }
+}
+
+
+/* ============================================
+   CONTROLS V4 - Explicit Mobile Layout
+   ============================================ */
+
+/* Desktop Default */
+.attendance-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.control-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-search .form-control {
+    width: 250px;
+}
+
+.tools-grid {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tools-grid .btn {
+    white-space: nowrap;
+}
+
+/* Mobile Overrides - STRICT VERTICAL STACK */
+@media (max-width: 768px) {
+    .attendance-controls {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    /* 1. Date Check */
+    .control-date {
+        justify-content: center !important;
+        width: 100% !important;
+        background: #fdfdfd;
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+
+    /* 2. Search Check */
+    .control-search {
+        width: 100% !important;
+    }
+    .control-search .form-control {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* 3. Tools 2x3 Grid Check */
+    .tools-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+    
+    .tools-grid .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.6rem !important;
+        font-size: 0.95rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.3rem !important;
+        margin: 0 !important;
+    }
+
+    /* 4. Save Button Check */
+    .control-save {
+        width: 100% !important;
+    }
+    .control-save button {
+        width: 100% !important;
+        padding: 0.75rem !important;
+        font-size: 1rem !important;
+        background: #10b981 !important; /* Force nice green */
+        color: white !important;
+        font-weight: bold !important;
+        margin-top: 0.5rem !important;
+    }
+}
+
+
+/* Mobile Date Selector Optimization V5 */
+@media (max-width: 768px) {
+    .control-date {
+        justify-content: space-between !important;
+        padding: 0.5rem 1rem !important;
+        gap: 0 !important;
+    }
+
+    .control-date .btn {
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.2rem !important; /* Bigger arrow */
+        flex-shrink: 0 !important;
+        border-radius: 50% !important; /* Circle buttons */
+        background: #f1f3f5 !important;
+        border: none !important;
+        color: #333 !important;
+    }
+
+    .control-date h3 {
+        flex-grow: 1 !important;
+        text-align: center !important;
+        margin: 0 !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        color: #1a1a1a !important;
+    }
+}
+
+
+/* Mobile Save Button Full Width */
+@media (max-width: 768px) {
+    .control-save {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+        display: block !important;
+    }
+    
+    .control-save .btn {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0.8rem 1rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        border-radius: 8px !important;
+        background-color: #10b981 !important; /* Vivid Green */
+        color: white !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    }
+}
+
+
+/* FINAL REFINEMENT - MOBILE BUTTONS */
+@media (max-width: 768px) {
+    /* 1. Tools Grid: 2 columns, standard height buttons */
+    .tools-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+
+    .tools-grid .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 0.5rem 0.75rem !important; /* Standard small padding */
+        font-size: 0.9rem !important;        /* Standard font size */
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.3rem !important;
+        height: auto !important;             /* Let content dictate height, don't force tall */
+    }
+
+    /* 2. Save Button: Wide but Standard Height (Small) */
+    .control-save {
+        width: 100% !important;
+        margin-top: 0.75rem !important;
+    }
+
+    .control-save .btn {
+        width: 100% !important;
+        padding: 0.5rem 0.75rem !important; /* RETURN TO SMALLER PADDING */
+        font-size: 0.9rem !important;        /* RETURN TO STANDARD FONT */
+        font-weight: 600 !important;
+        justify-content: center !important;
+    }
+}
+
+
+/* USER GRID LAYOUT for Mobile < 768px */
+@media (max-width: 768px) {
+
+    /* GRID PRINCIPAL */
+    .tools-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        grid-template-areas:
+            'detail present absent'
+            'maladie vacance effacer' !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+
+    /* Placement précis */
+    .btn-detail   { grid-area: detail !important; }
+    .btn-present  { grid-area: present !important; }
+    .btn-absent   { grid-area: absent !important; }
+    .btn-maladie  { grid-area: maladie !important; }
+    .btn-vacance  { grid-area: vacance !important; }
+    .btn-effacer  { grid-area: effacer !important; }
+
+    /* Style boutons */
+    .tools-grid .btn {
+        width: 100% !important;
+        padding: 0.5rem !important;
+        font-size: 0.85rem !important; /* Slightly smaller to fit 3 in a row */
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+        height: auto !important;
+    }
+
+    /* Bouton sauvegarder */
+    .control-save {
+        margin-top: 0.75rem !important;
+        width: 100% !important;
+    }
+
+    .control-save .btn {
+        width: 100% !important;
+        padding: 0.7rem !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        display: block !important;
+    }
+}
+
+
+/* ============================================
+   USER REQUESTED STRUCTURE - TOOLS WRAPPER
+   ============================================ */
+
+/* Desktop Default: Ensure Tools and Save button sit side-by-side or as needed */
+.tools-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* User's Mobile specific CSS */
+@media (max-width: 768px) {
+
+  .tools-wrapper {
+    width: 100% !important;
+    display: block !important; /* Reset flex for mobile wrapper if needed, or use column */
+  }
+
+  .tools-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  .tools-grid .btn {
+    width: 100% !important;
+    font-size: 0.85rem !important;
+    padding: 0.45rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .btn-save {
+    margin-top: 0.8rem !important;
+    width: 100% !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 0.7rem !important;
+  }
+}
+
+
+/* FINAL CSS FIX - USER PROVIDED */
+@media (max-width: 768px) {
+
+  /* 1. Force Block Display on Wrapper to break Flex parent issues */
+  .tools-wrapper {
+    width: 100% !important;
+    display: block !important; 
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Grid Setup */
+  .tools-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  /* 3. Button Styles - Centered & Full Width of Cell */
+  .tools-grid .btn {
+    width: 100% !important;
+    padding: 0.45rem !important;
+    font-size: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    margin: 0 !important; /* Reset any legacy margins */
+  }
+
+  /* 4. Save Button - Full Width & Spaced */
+  .btn-save {
+    width: 100% !important;
+    margin-top: 0.75rem !important;
+    font-weight: 600 !important;
+    padding: 0.7rem !important;
+    display: block !important;
+  }
+}
+
+
+/* FIX BETON / CONCRETE FIX - High Specificity & Flex Override */
+@media (max-width: 768px) {
+  .attendance-controls .tools-wrapper {
+    width: 100% !important;
+    display: block !important;
+    flex: 0 0 100% !important; /* Forces full width inside flex parent */
+  }
+
+  .attendance-controls .tools-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important; /* minmax ensures no overflow */
+    gap: 0.5rem !important;
+    width: 100% !important;
+  }
+
+  .attendance-controls .tools-grid .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    padding: 0.45rem !important; /* Ensure consistent padding */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .attendance-controls .btn-save {
+    width: 100% !important;
+    display: block !important;
+    margin-top: 0.75rem !important;
+  }
+}
+
+
+/* FIX ANTI-SUPERPOSITION / RESET FLOW */
+@media (max-width: 768px) {
+
+  .attendance-controls .tools-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    align-items: stretch !important;
+  }
+
+  /* Reset total pour empêcher overlap/float/absolute */
+  .attendance-controls .tools-grid > .btn {
+    position: static !important;
+    float: none !important;
+    clear: none !important;
+    transform: none !important;
+
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0.45rem 0.4rem !important;
+    min-height: 38px !important;
+
+    justify-content: center !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+  }
+
+  .attendance-controls .tools-wrapper {
+    width: 100% !important;
+    display: block !important;
+    flex: 0 0 100% !important;
+  }
+
+  .attendance-controls .btn-save {
+    width: 100% !important;
+    display: block !important;
+    margin-top: 0.75rem !important;
+  }
+}
+
